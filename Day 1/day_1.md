@@ -6,6 +6,11 @@
 
 Arrays in Java are a collection of elements, all of the same type, stored in a contiguous memory location. They allow you to store multiple values in a single variable, making data management more efficient. Arrays are fixed in size and can be accessed using an index.
 
+
+#### **Real time Example**
+![Input](/images/Array.png)
+
+
 #### **✨ Advantages of Arrays**
 
 - ***Efficient Memory Usage***: Arrays store elements in contiguous memory locations, leading to efficient data retrieval.
