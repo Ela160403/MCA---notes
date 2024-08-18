@@ -1,6 +1,6 @@
 ## Introduction to Arrays in Java 🚀
 
-#### Day 2 - 18-08-2024
+#### Day 1 - 19-08-2024
 
 #### **📖 Concept of Arrays**
 
