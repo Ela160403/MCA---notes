@@ -1,5 +1,17 @@
 # Day 3
 ## Date: 21-08-2024
+## 🎓 Placement Training SQL Problems
+
+This set of SQL problems is designed for placement training, focusing on key concepts like:
+
+- Ranking employees by salary within departments 🏢
+- Identifying specific dates in sales data 📅
+- Exploring various scenarios such as:
+  - Finding employees without managers 🤔
+  - Identifying employees with matching salaries across different departments 💼
+
+These problems will help you practice writing complex SQL queries using concepts such as subqueries, window functions, and conditional filtering 🛠️.
+
 
 ---
 
