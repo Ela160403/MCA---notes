@@ -1,11 +1,14 @@
 # Day 3
-# Date: 21-08-2024
+## Date: 21-08-2024
+
+---
+
 ## Problem 1: Find the Top 3 Employees by Salary in Each Department
 
 ### Objective
 Given a table of employees with their respective departments and salaries, find the top 3 employees with the highest salaries in each department.
 
-### Input Table - `employees`:
+### Input Table - `employees`
 
 | emp_id | emp_name | department | salary |
 |--------|----------|------------|--------|
@@ -18,7 +21,6 @@ Given a table of employees with their respective departments and salaries, find 
 | 7      | Grace    | IT         | 115000 |
 
 ### Output
-The output should list the top 3 employees by salary in each department.
 
 | emp_id | emp_name | department | salary |
 |--------|----------|------------|--------|
@@ -32,10 +34,36 @@ The output should list the top 3 employees by salary in each department.
 ### Constraints
 - Assume each department has at least three employees.
 - Salaries are positive integers.
+- If multiple employees have the same salary within the top 3, include all of them.
 
-### Instructions
-- Write a query to retrieve the top 3 employees by salary from each department.
-- Consider ties in salaries; if multiple employees have the same salary within the top 3, include all of them.
+### Example
+#### Input:
+```sql
+INSERT INTO employees (emp_id, emp_name, department, salary)
+VALUES
+(1, 'Alice', 'HR', 80000),
+(2, 'Bob', 'IT', 120000),
+(3, 'Carol', 'HR', 85000),
+(4, 'Dave', 'IT', 90000),
+(5, 'Eve', 'HR', 95000),
+(6, 'Frank', 'IT', 110000),
+(7, 'Grace', 'IT', 115000);
+```
+
+#### Output:
+```sql
+SELECT emp_id, emp_name, department, salary
+FROM employees
+WHERE (department, salary) IN (
+    SELECT department, salary
+    FROM (
+        SELECT department, salary, DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) as rnk
+        FROM employees
+    ) as ranked_salaries
+    WHERE rnk <= 3
+)
+ORDER BY department, salary DESC;
+```
 
 ---
 
@@ -44,7 +72,7 @@ The output should list the top 3 employees by salary in each department.
 ### Objective
 Given a table of sales data with product names and sale dates, identify all the products that were sold on the last day of each month.
 
-### Input Table - `sales`:
+### Input Table - `sales`
 
 | sale_id | product_name | sale_date |
 |---------|--------------|-----------|
@@ -55,21 +83,46 @@ Given a table of sales data with product names and sale dates, identify all the 
 | 5       | Laptop       | 2024-03-31|
 
 ### Output
-The output should list the `sale_id`, `product_name`, and `sale_date` for the products sold on the last day of each month.
+
+| sale_id | product_name | sale_date |
+|---------|--------------|-----------|
+| 1       | Laptop       | 2024-01-31|
+| 3       | Keyboard     | 2024-02-28|
+| 4       | Monitor      | 2024-02-28|
+| 5       | Laptop       | 2024-03-31|
 
 ### Constraints
 - The `sale_date` is in `YYYY-MM-DD` format.
 - A month can have multiple products sold on the last day.
+- The query should correctly handle months with different numbers of days.
 
-### Instructions
-- Write a query to retrieve the sales records of products sold on the last day of each month.
-- Ensure that the query correctly handles months with different numbers of days (e.g., February).
+### Example
+#### Input:
+```sql
+INSERT INTO sales (sale_id, product_name, sale_date)
+VALUES
+(1, 'Laptop', '2024-01-31'),
+(2, 'Mouse', '2024-01-25'),
+(3, 'Keyboard', '2024-02-28'),
+(4, 'Monitor', '2024-02-28'),
+(5, 'Laptop', '2024-03-31');
+```
+
+#### Output:
+```sql
+SELECT sale_id, product_name, sale_date
+FROM sales
+WHERE sale_date = LAST_DAY(sale_date);
+```
 
 ---
 
 ## Problem 3: Find the Second Highest Salary Without Using `LIMIT` or `TOP`
 
-### Input Table - `employees`:
+### Objective
+You are given a table named `employees`, where each row contains details about an employee's ID, name, and salary. The task is to write a SQL query to find the second highest salary from the table without using the `LIMIT` or `TOP` clause.
+
+### Input Table - `employees`
 
 | emp_id | emp_name | salary  |
 |--------|----------|---------|
@@ -79,21 +132,43 @@ The output should list the `sale_id`, `product_name`, and `sale_date` for the pr
 | 4      | Dave     | 90000   |
 | 5      | Eve      | 95000   |
 
-### Problem Description
-You are given a table named `employees`, where each row contains details about an employee's ID, name, and salary. The task is to write a SQL query to find the second highest salary from the table without using the `LIMIT` or `TOP` clause.
-
-### Expected Output
-The second highest salary from the `employees` table:
+### Output
 
 | salary  |
 |---------|
 | 95000   |
 
+### Constraints
+- Salaries are positive integers.
+- The table contains at least two employees.
+
+### Example
+#### Input:
+```sql
+INSERT INTO employees (emp_id, emp_name, salary)
+VALUES
+(1, 'Alice', 80000),
+(2, 'Bob', 120000),
+(3, 'Carol', 85000),
+(4, 'Dave', 90000),
+(5, 'Eve', 95000);
+```
+
+#### Output:
+```sql
+SELECT MAX(salary) AS salary
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+```
+
 ---
 
 ## Problem 4: Find Employees Who Have the Same Salary as Someone in Another Department
 
-### Input Table - `employees`:
+### Objective
+You are given a table named `employees`, which contains employee details including their ID, name, department, and salary. The task is to write a SQL query to find all employees who have the same salary as someone in a different department.
+
+### Input Table - `employees`
 
 | emp_id | emp_name | department | salary  |
 |--------|----------|------------|---------|
@@ -103,24 +178,48 @@ The second highest salary from the `employees` table:
 | 4      | Dave     | IT         | 90000   |
 | 5      | Eve      | Sales      | 95000   |
 
-### Problem Description
-You are given a table named `employees`, which contains employee details including their ID, name, department, and salary. The task is to write a SQL query to find all employees who have the same salary as someone in a different department.
-
-### Expected Output
-The employees who have the same salary as someone in a different department:
+### Output
 
 | emp_name |
 |----------|
 | Carol    |
 | Eve      |
 
+### Constraints
+- Salaries are positive integers.
+- The table contains at least one pair of employees with the same salary in different departments.
+
+### Example
+#### Input:
+```sql
+INSERT INTO employees (emp_id, emp_name, department, salary)
+VALUES
+(1, 'Alice', 'HR', 80000),
+(2, 'Bob', 'IT', 120000),
+(3, 'Carol', 'HR', 95000),
+(4, 'Dave', 'IT', 90000),
+(5, 'Eve', 'Sales', 95000);
+```
+
+#### Output:
+```sql
+SELECT emp_name
+FROM employees e1
+WHERE EXISTS (
+    SELECT 1
+    FROM employees e2
+    WHERE e1.salary = e2.salary AND e1.department <> e2.department
+);
+```
+
 ---
 
 ## Problem 5: Find All Employees Who Don’t Have a Manager
 
-### Input Tables - `employees`, `managers`:
+### Objective
+You are given a table named `employees`, which contains information about employees, including their IDs, names, and the ID of their manager. The task is to write a SQL query to find all employees who do not have a manager (i.e., their `manager_id` is `NULL`).
 
-#### Table `employees`:
+### Input Table - `employees`
 
 | emp_id | emp_name | manager_id |
 |--------|----------|------------|
@@ -130,14 +229,30 @@ The employees who have the same salary as someone in a different department:
 | 4      | Dave     | 2          |
 | 5      | Eve      | 1          |
 
-### Problem Description
-You are given a table named `employees`, which contains information about employees, including their IDs, names, and the ID of their manager. The task is to write a SQL query to find all employees who do not have a manager (i.e., their `manager_id` is `NULL`).
+### Output
 
-### Expected Output:
-The output of the query would be:
+| emp_name |
+|----------|
+| Bob      |
 
-emp_name
----------
-Bob
+### Constraints
+- The table contains at least one employee without a manager.
 
----
+### Example
+#### Input:
+```sql
+INSERT INTO employees (emp_id, emp_name, manager_id)
+VALUES
+(1, 'Alice', 2),
+(2, 'Bob', NULL),
+(3, 'Carol', 1),
+(4, 'Dave', 2),
+(5, 'Eve', 1);
+```
+
+#### Output:
+```sql
+SELECT emp_name
+FROM employees
+WHERE manager_id IS NULL;
+```
