@@ -48,7 +48,7 @@ Given a table of employees with their respective departments and salaries, find 
 - Salaries are positive integers.
 - If multiple employees have the same salary within the top 3, include all of them.
 
-### Example
+### Queries
 #### Input:
 ```sql
 INSERT INTO employees (emp_id, emp_name, department, salary)
@@ -62,22 +62,6 @@ VALUES
 (7, 'Grace', 'IT', 115000);
 ```
 
-#### Output:
-```sql
-SELECT emp_id, emp_name, department, salary
-FROM employees
-WHERE (department, salary) IN (
-    SELECT department, salary
-    FROM (
-        SELECT department, salary, DENSE_RANK() OVER (PARTITION BY department ORDER BY salary DESC) as rnk
-        FROM employees
-    ) as ranked_salaries
-    WHERE rnk <= 3
-)
-ORDER BY department, salary DESC;
-```
-
----
 
 ## Problem 2: Find Products Sold on the Last Day of Each Month
 
@@ -108,7 +92,7 @@ Given a table of sales data with product names and sale dates, identify all the 
 - A month can have multiple products sold on the last day.
 - The query should correctly handle months with different numbers of days.
 
-### Example
+### Queries
 #### Input:
 ```sql
 INSERT INTO sales (sale_id, product_name, sale_date)
@@ -118,13 +102,6 @@ VALUES
 (3, 'Keyboard', '2024-02-28'),
 (4, 'Monitor', '2024-02-28'),
 (5, 'Laptop', '2024-03-31');
-```
-
-#### Output:
-```sql
-SELECT sale_id, product_name, sale_date
-FROM sales
-WHERE sale_date = LAST_DAY(sale_date);
 ```
 
 ---
@@ -154,7 +131,7 @@ You are given a table named `employees`, where each row contains details about a
 - Salaries are positive integers.
 - The table contains at least two employees.
 
-### Example
+### Queries
 #### Input:
 ```sql
 INSERT INTO employees (emp_id, emp_name, salary)
@@ -164,13 +141,6 @@ VALUES
 (3, 'Carol', 85000),
 (4, 'Dave', 90000),
 (5, 'Eve', 95000);
-```
-
-#### Output:
-```sql
-SELECT MAX(salary) AS salary
-FROM employees
-WHERE salary < (SELECT MAX(salary) FROM employees);
 ```
 
 ---
@@ -201,7 +171,7 @@ You are given a table named `employees`, which contains employee details includi
 - Salaries are positive integers.
 - The table contains at least one pair of employees with the same salary in different departments.
 
-### Example
+### Queries
 #### Input:
 ```sql
 INSERT INTO employees (emp_id, emp_name, department, salary)
@@ -211,17 +181,6 @@ VALUES
 (3, 'Carol', 'HR', 95000),
 (4, 'Dave', 'IT', 90000),
 (5, 'Eve', 'Sales', 95000);
-```
-
-#### Output:
-```sql
-SELECT emp_name
-FROM employees e1
-WHERE EXISTS (
-    SELECT 1
-    FROM employees e2
-    WHERE e1.salary = e2.salary AND e1.department <> e2.department
-);
 ```
 
 ---
@@ -250,7 +209,7 @@ You are given a table named `employees`, which contains information about employ
 ### Constraints
 - The table contains at least one employee without a manager.
 
-### Example
+### Queries
 #### Input:
 ```sql
 INSERT INTO employees (emp_id, emp_name, manager_id)
@@ -260,11 +219,4 @@ VALUES
 (3, 'Carol', 1),
 (4, 'Dave', 2),
 (5, 'Eve', 1);
-```
-
-#### Output:
-```sql
-SELECT emp_name
-FROM employees
-WHERE manager_id IS NULL;
 ```
