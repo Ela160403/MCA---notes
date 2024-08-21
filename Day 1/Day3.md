@@ -1,8 +1,5 @@
-Here’s the revised `problem.md` file with the examples removed:
-
-```markdown
 # Day 3
-
+# Date: 21-08-2024
 ## Problem 1: Find the Top 3 Employees by Salary in Each Department
 
 ### Objective
