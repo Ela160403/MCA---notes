@@ -138,7 +138,7 @@ You are given a table named `employees`, which contains information about employ
 
 ### Expected Output:
 The output of the query would be:
-```plaintext
+
 emp_name
 ---------
 Bob
