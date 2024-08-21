@@ -1,4 +1,4 @@
-Certainly! Below is the GitHub-formatted `problem.md` file that includes all the problem statements:
+Here’s the revised `problem.md` file with the examples removed:
 
 ```markdown
 # Day 3
@@ -36,32 +36,6 @@ The output should list the top 3 employees by salary in each department.
 - Assume each department has at least three employees.
 - Salaries are positive integers.
 
-### Example
-#### Input:
-```plaintext
-emp_id | emp_name | department | salary
-----------------------------------------
-1      | Alice    | HR         | 80000
-2      | Bob      | IT         | 120000
-3      | Carol    | HR         | 85000
-4      | Dave     | IT         | 90000
-5      | Eve      | HR         | 95000
-6      | Frank    | IT         | 110000
-7      | Grace    | IT         | 115000
-```
-
-#### Output:
-```plaintext
-emp_id | emp_name | department | salary
-----------------------------------------
-5      | Eve      | HR         | 95000
-3      | Carol    | HR         | 85000
-1      | Alice    | HR         | 80000
-2      | Bob      | IT         | 120000
-7      | Grace    | IT         | 115000
-6      | Frank    | IT         | 110000
-```
-
 ### Instructions
 - Write a query to retrieve the top 3 employees by salary from each department.
 - Consider ties in salaries; if multiple employees have the same salary within the top 3, include all of them.
@@ -89,28 +63,6 @@ The output should list the `sale_id`, `product_name`, and `sale_date` for the pr
 ### Constraints
 - The `sale_date` is in `YYYY-MM-DD` format.
 - A month can have multiple products sold on the last day.
-
-### Example
-#### Input:
-```plaintext
-sale_id | product_name | sale_date
------------------------------------
-1       | Laptop       | 2024-01-31
-2       | Mouse        | 2024-01-25
-3       | Keyboard     | 2024-02-28
-4       | Monitor      | 2024-02-28
-5       | Laptop       | 2024-03-31
-```
-
-#### Output:
-```plaintext
-sale_id | product_name | sale_date
------------------------------------
-1       | Laptop       | 2024-01-31
-3       | Keyboard     | 2024-02-28
-4       | Monitor      | 2024-02-28
-5       | Laptop       | 2024-03-31
-```
 
 ### Instructions
 - Write a query to retrieve the sales records of products sold on the last day of each month.
@@ -183,7 +135,6 @@ The employees who have the same salary as someone in a different department:
 
 ### Problem Description
 You are given a table named `employees`, which contains information about employees, including their IDs, names, and the ID of their manager. The task is to write a SQL query to find all employees who do not have a manager (i.e., their `manager_id` is `NULL`).
-
 
 ### Expected Output:
 The output of the query would be:
