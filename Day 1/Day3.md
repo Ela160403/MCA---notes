@@ -142,4 +142,5 @@ The output of the query would be:
 emp_name
 ---------
 Bob
-```
+
+---
