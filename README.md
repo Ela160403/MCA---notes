@@ -13,6 +13,7 @@ Welcome to my MCA Concepts and Notes repository! This collection includes detail
 5. [Next Generation Networks](./next-generation-network/)
 6. [Python Programming](./python/)
 7. [Software Engineering](./software-engineering/)
+8. [Design and analysis of ALgorithm](./design-and-analysis-of-algorithm/)
 
 ---
 
