@@ -14,7 +14,7 @@ Welcome to my MCA Concepts and Notes repository! This collection includes detail
 6. [Python Programming](./python/)
 7. [Software Engineering](./software-engineering/)
 8. [Design and analysis of ALgorithm](./design-and-analysis-of-algorithm/)
-
+9.[Software and Testing](./st/)
 ---
 
 ## 🔍 How to Use
